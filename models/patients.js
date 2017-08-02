@@ -3,12 +3,13 @@ var doctor=require("./doctors");
 var patientsSchema=new mongoose.Schema({
     name:String,
     contact:Number,
-    doctor:{
+    doctors:[{
         
         
              type:mongoose.Schema.Types.ObjectId,
              ref:"doctor"
-    },
+             
+    }],
         
  date:Date,
  time:String

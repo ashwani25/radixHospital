@@ -13,6 +13,7 @@ app.get("/",function(req,res){
 app.get("/appointment",function(req,res){
    
         res.render("appointment");
+        
     
 });
 app.post("/appointment",function(req,res){
@@ -25,25 +26,39 @@ app.post("/appointment",function(req,res){
     var date=req.body.date;
     var time=req.body.time;
     var newDoctor={DoctorName:DoctorName,department:bus};
-    doctor.create(newDoctor,function(err,doctor){
+    var newPatient={name:name,contact:contact,date:date,time:time};
+    patient.create(newPatient,function(err,Patient){
         if(err){
             console.log(err);
         }else{
-            doctor.save();
-             var newPatient={name:name,contact:contact,doctor:doctor,date:date,time:time};
-            patient.create(newPatient,function(err,patient){
-        if(err){
-            console.log(err);
-        }else{
-            patient.save();
-            res.redirect("/appointment");
+            Patient.save();
         }
     });
-}
+    doctor.create(newDoctor,function(err,Doctor){
+        patient.findOne({contact:contact},function(err,foundPatient){
+            if(err){
+                console.log(err);
+            }else{
+                foundPatient.doctors.push(Doctor);
+                foundPatient.save(function(err,data){
+                    if(err){
+                        console.log(err);
+                    }else{
+                        //console.log(data);
+                        patient.findOne({contact:contact}).populate("doctors").exec(function(err,Patient){
+                                                if(err){
+                                                    console.log(err);
+                                                }else{
+                                                    console.log(Patient);
+                                                }
+                                            });
+                        res.redirect("/appointment");
+                    }
+                })
+            }
+        })
+    });
     
-    
-   
-});
 });
 
 app.listen(3000,function(req,res){
