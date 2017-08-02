@@ -2,13 +2,15 @@ var mongoose=require("mongoose");
 var doctor=require("./doctors");
 var patientsSchema=new mongoose.Schema({
     name:String,
-    address:String,
     contact:Number,
-    doctors:[
-        {
+    doctor:{
+        
+        
              type:mongoose.Schema.Types.ObjectId,
              ref:"doctor"
-         }
-    ]
+    },
+        
+ date:Date,
+ time:String
 }); 
 module.exports=mongoose.model("patient",patientsSchema);

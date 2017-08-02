@@ -1,6 +1,6 @@
 var mongoose=require("mongoose");
 var doctorsSchema=new mongoose.Schema({
-    name:String,
-    speciality:String
+    DoctorName:String,
+    department:String
 });
 module.exports=mongoose.model("doctor",doctorsSchema);
