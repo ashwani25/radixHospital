@@ -11,7 +11,6 @@ var patientsSchema=new mongoose.Schema({
              
     }],
         
- date:Date,
- time:String
+ token:Number
 }); 
 module.exports=mongoose.model("patient",patientsSchema);
