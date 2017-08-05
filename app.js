@@ -89,10 +89,13 @@ app.post("/appointment",function(req,res){
                                                     console.log(err);
                                                 }else{
                                                     console.log(Patient);
+                    req.flash("success","Hello "+Patient.name+"!! your token no. is "+Patient.token+". Your appointment is scheduled with "+req.body.DoctorName+" on "+req.body.date.toString()+" at "+req.body.time+".");
+                        res.redirect("/appointment");
                                                   
                                                 }
                                             });
-                        res.redirect("/appointment");
+          
+                        
                     }
                 });
             }
