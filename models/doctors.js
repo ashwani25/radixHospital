@@ -3,6 +3,6 @@ var doctorsSchema=new mongoose.Schema({
     DoctorName:String,
     department:String,
     time:String,
-    date:Date
+    date:String
 });
 module.exports=mongoose.model("doctor",doctorsSchema);
