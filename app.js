@@ -35,10 +35,7 @@ app.get("/appointment",function(req,res){
 });
     
 app.post("/appointment",function(req,res){
-    // req.checkBody('name', 'Invalid name').isAlpha();
-    // req.checkBody('contact', 'Invalid contact no.').notEmpty().isInt();
-    // req.sanitize('name').escape();
-    // req.sanitize('name').trim();
+   
     var name=req.body.name;
     var contact=req.body.contact;
     var bus=req.body.cars;
@@ -48,6 +45,19 @@ app.post("/appointment",function(req,res){
     var date=date.toString();
 
     var time=req.body.time;
+     req.checkBody('name', 'Invalid name').isAlpha().notEmpty();
+     req.checkBody('contact', 'Invalid contact no.').notEmpty().isInt();
+     req.checkBody("bus","Invalid department").isEmpty();
+     req.checkBody("DoctorName","Invalid DoctorName").notEmpty(); 
+     req.checkBody("date","Invalid date").notEmpty();
+     req.checkBody("time","Invalid time").notEmpty();    
+    
+     var errors = req.validationErrors();
+  if (errors) {
+    req.flash("error","Please make sure every field is filled correctly.");
+   res.redirect("/appointment");
+    return;
+  }else{
     var newDoctor={DoctorName:DoctorName,department:bus,time:time,date:date};
    
     doctor.create(newDoctor,function(err,Doctor){
@@ -107,7 +117,9 @@ app.post("/appointment",function(req,res){
 
 
 });
+  }
 });
+
 
 app.get("*",function(req,res){
     res.send("sorry page not found:(");
