@@ -1,0 +1,75 @@
+<% include ../partials/header %>
+<div class="container">
+
+ <div class="row">
+    
+                 <div class="col-lg-1">    
+                    <div>Token no.</div>
+                </div>  
+                <div class="col-lg-2">
+                    <div>contact no.</div>
+                </div>
+                <div class="col-lg-2">    
+                    <div>Patient's name</div>
+                </div>
+                <div class="col-lg-2">    
+                    <div>Doctor's name</div>
+                </div>
+                <div class="col-lg-1">
+                    <div>Time</div>
+                </div>
+                <div class="col-lg-2">
+                    <div>Date</div>
+                </div>
+                <div class="col-lg-2">
+                    <form action="/admin" method="POST">
+                     <label for="date">Please select date to see appointments</label>
+                       <input class="form-control" type="date" name="date">
+                       <input type="submit">
+                    </form>   
+                </div>
+ </div>
+                
+                 
+            
+            
+<%patients.forEach(function(patient){%>
+            
+                <div class="col-lg-1">
+                 <%patient.token_no.forEach(function(token){%>
+                        <div><%=token.token%></div>
+                 <%});%>
+                </div>
+            
+          
+        
+                 <div class="col-lg-2">
+                 <div><%=patient.contact%></div>
+                 </div>
+            
+        
+                 <div class="col-lg-2">
+                 <div><%=patient.name%></div>
+                 </div>
+            
+        
+                 <div class="col-lg-2">
+                 <%patient.doctors.forEach(function(doctor){%>
+                        <div><%=doctor.DoctorName%></div>
+                 </div>
+                    <div class="col-lg-1">      
+                        <div><%=doctor.time%></div>
+                    </div>
+                    <div class="col-lg-2>">
+                        <div><%=doctor.date%></div>
+                    </div>    
+                 <%});%>
+
+            
+                <%});%>
+
+    
+</div>
+
+<% include ../partials/footer %>
+    

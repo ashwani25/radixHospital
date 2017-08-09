@@ -1,0 +1,14 @@
+<h1>admin page!!</h1>
+<%patients.forEach(function(patient){%>
+    <table>
+        <tbody>
+            <div>
+                 <td><%=patient.token_no[0].token%></td> 
+                   <td></td>
+            </div>
+            <td></td>
+            <td></td>
+        </tbody>
+    </table>
+    
+<%});%>
