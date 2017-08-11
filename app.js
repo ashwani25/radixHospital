@@ -9,6 +9,7 @@ var patient = require("./models/patients");
 var Token = require("./models/token.js");
 var moment=require("moment");
 var app = express();
+app.use(express.static( __dirname + "/scripts"));
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -40,7 +41,7 @@ app.get("/appointment", function (req, res) {
 
 app.post("/appointment", function (req, res) {
 
-    var name = req.body.name;
+    var name = req.body.name.toString();
     var contact = req.body.contact;
     var bus = req.body.cars;
     var DoctorName = req.body.DoctorName;
@@ -49,8 +50,8 @@ app.post("/appointment", function (req, res) {
     var date = date.toString();
 
     var time = req.body.time;
-    req.checkBody('name', 'Invalid name').isAlpha().notEmpty();
-    req.checkBody('contact', 'Invalid contact no.').notEmpty().isInt();
+    req.checkBody("name", "Invalid name").notEmpty();
+    req.checkBody('contact', 'Invalid contact no.').notEmpty().isInt().isLength(10);
     req.checkBody("bus", "Invalid department").isEmpty();
     req.checkBody("DoctorName", "Invalid DoctorName").notEmpty();
     req.checkBody("date", "Invalid date").notEmpty();
@@ -58,8 +59,9 @@ app.post("/appointment", function (req, res) {
 
     var errors = req.validationErrors();
     if (errors) {
-        req.flash("error", "Please make sure every field is filled correctly.");
-        res.redirect("/appointment");
+        // req.flash("error", "Please make sure every field is filled correctly.");
+        // res.redirect("/appointment");
+        res.send(errors);
         return;
     } else {
         var newDoctor = {
@@ -176,9 +178,9 @@ app.post("/admin",function(req,res){
 });
 
 
-app.get("*", function (req, res) {
-    res.send("sorry page not found:(");
-});
+// app.get("*", function (req, res) {
+//     res.send("sorry page not found:(");
+// });
 
 app.listen(3000, function (req, res) {
     console.log("server started");
