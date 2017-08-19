@@ -34,8 +34,19 @@ app.get("/", function (req, res) {
     res.render("home");
 });
 app.get("/appointment", function (req, res) {
+    
     res.render("appointment");
-
+});
+app.get("/time", function (req, res) {
+    
+    doctor.find({},function(err,doctor){
+        if(err){
+            console.log(err);
+        }else{
+           
+             res.json({doctor:doctor});
+        }
+    });
 
 });
 
@@ -80,7 +91,7 @@ app.post("/appointment", function (req, res) {
                 if (err) {
                     console.log(err);
                 } else {
-
+                  
                     foundDoctors.forEach(function (doctors) {
 
                         if (doctors.date === req.body.date.toString()) {
@@ -157,30 +168,36 @@ app.post("/appointment", function (req, res) {
 });
 app.get("/admin",function(req,res){
     var date=moment().format().toString().slice(0,10);
-
-    console.log(date);
        patient.find({Date:date}).populate("doctors").populate("token_no").exec(function(err,patients){
       
         var patients={"patients":patients};
       res.render("admin",{patients:patients.patients});
+         
            
     });
 });
 app.post("/admin",function(req,res){
     var date=req.body.date;
     patient.find({Date:date}).populate("doctors").populate("token_no").exec(function(err,patients){
-      
-        var patients={"patients":patients};
+      if(err){
+          console.log(err)
+      }else{
+         var patients={"patients":patients};
+    
       res.render("admin",{patients:patients.patients});
+      }
+       
+      
            
     });
 
 });
 
 
-// app.get("*", function (req, res) {
-//     res.send("sorry page not found:(");
-// });
+
+app.get("*", function (req, res) {
+    res.send("sorry page not found:(");
+});
 
 app.listen(3000, function (req, res) {
     console.log("server started");

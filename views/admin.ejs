@@ -1,75 +1,78 @@
 <% include ../partials/header %>
-<div class="container">
+    <div class="container">
 
- <div class="row">
-    
-                 <div class="col-lg-1">    
-                    <div>Token no.</div>
-                </div>  
-                <div class="col-lg-2">
-                    <div>contact no.</div>
-                </div>
-                <div class="col-lg-2">    
-                    <div>Patient's name</div>
-                </div>
-                <div class="col-lg-2">    
-                    <div>Doctor's name</div>
-                </div>
-                <div class="col-lg-1">
-                    <div>Time</div>
-                </div>
-                <div class="col-lg-2">
-                    <div>Date</div>
-                </div>
-                <div class="col-lg-2">
-                    <form action="/admin" method="POST">
-                     <label for="date">Please select date to see appointments</label>
-                       <input class="form-control" type="date" name="date">
-                       <input class="btn btn-primary form-control"  type="submit">
-                    </form>   
-                </div>
- </div>
-                
-                 
-            
-            
-<%patients.forEach(function(patient){%>
-            
-                <div class="col-lg-1">
-                 <%patient.token_no.forEach(function(token){%>
-                        <div><%=token.token%></div>
-                 <%});%>
-                </div>
-            
-          
-        
-                 <div class="col-lg-2">
-                 <div><%=patient.contact%></div>
-                 </div>
-            
-        
-                 <div class="col-lg-2">
-                 <div><%=patient.name%></div>
-                 </div>
-            
-        
-                 <div class="col-lg-2">
-                 <%patient.doctors.forEach(function(doctor){%>
-                        <div><%=doctor.DoctorName%></div>
-                 </div>
-                    <div class="col-lg-1">      
-                        <div><%=doctor.time%></div>
+        <div class="row">
+
+            <div class="col-lg-1 col-sm-1">
+                Token no.
+            </div>
+            <div class="col-lg-2 col-sm-2">
+                contact no.
+            </div>
+            <div class="col-lg-2 col-sm-2">
+                Patient's name
+            </div>
+            <div class="col-lg-2 col-sm-2">
+                Doctor's name
+            </div>
+            <div class="col-lg-1 col-sm-1">
+                Time
+            </div>
+            <div class="col-lg-2 col-sm-2">
+                Date
+            </div>
+            <div class="col-lg-2 col-sm-2">
+                <form action="/admin" method="POST">
+                    <label for="date">Please select date to see appointments</label>
+                    <input class="form-control" type="date" name="date">
+                    <input class="btn btn-primary form-control" type="submit">
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <%patients.forEach(function(patient){%>
+                <%patient.token_no.forEach(function(token){%>
+                    <div class="col-lg-1 col-sm-1">
+                        <%=token.token%>
+
                     </div>
-                    <div class="col-lg-2>">
-                        <div><%=doctor.date%></div>
-                    </div>    
-                 <%});%>
+                    <% });%>
 
-            
-                <%});%>
+                        <div class="col-lg-2 col-sm-2">
+                            <%=patient.contact%>
+                        </div>
 
-    
-</div>
 
-<% include ../partials/footer %>
-    
+                        <div class="col-lg-2 col-sm-2">
+                            <%=patient.name%>
+                        </div>
+
+
+                        <div class="col-lg-2 col-sm-2 doctorName">
+                            <%patient.doctors.forEach(function(doctor){%>
+                                <%=doctor.DoctorName%>
+                        </div>
+                        <div class="col-lg-1 col-sm-1 doctorTime">
+                            <%=doctor.time%>
+                        </div>
+                        <div class="col-lg-2 col-sm-2 doctorDate">
+                            <%=doctor.date%>
+                        </div>
+                         <div class="col-lg-2 col-sm-2"> <%=doctor.department%></div>
+                        <%});%>
+
+
+                            <%});%>
+
+
+                       
+
+        </div>
+    </div>
+
+
+    <% include ../partials/footer %>
